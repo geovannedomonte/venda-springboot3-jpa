@@ -8,9 +8,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.springbootjpa.venda.entities.Categoria;
 import com.springbootjpa.venda.entities.Pedido;
 import com.springbootjpa.venda.entities.Usuario;
 import com.springbootjpa.venda.entities.enums.StatusPedido;
+import com.springbootjpa.venda.repositories.CategoriaRepository;
 import com.springbootjpa.venda.repositories.PedidoRepository;
 import com.springbootjpa.venda.repositories.UsuarioRepository;
 
@@ -24,6 +26,9 @@ public class TestConfig implements CommandLineRunner{ //executar os objetos que 
 	@Autowired
 	private PedidoRepository pedidoRepository;
 	
+	@Autowired
+	private CategoriaRepository categoriaRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		
@@ -34,9 +39,14 @@ public class TestConfig implements CommandLineRunner{ //executar os objetos que 
 		Pedido o2 = new Pedido(null, Instant.parse("2024-07-21T03:42:10Z"), StatusPedido.CANCELADO, u2); 
 		Pedido o3 = new Pedido(null, Instant.parse("2024-07-22T15:21:22Z"),StatusPedido.ENTREGUE, u1);
 		
+		Categoria cat1 = new Categoria(null, "Consoles"); 
+		Categoria cat2 = new Categoria(null, "Jogos"); 
+		Categoria cat3 = new Categoria(null, "Acessorios"); 
+		Categoria cat4 = new Categoria(null, "Geek_Store");
 		
 		usuarioRepository.saveAll(Arrays.asList(u1, u2));
 		pedidoRepository.saveAll(Arrays.asList(o1, o2, o3));
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4));
 		
 		
 	}
