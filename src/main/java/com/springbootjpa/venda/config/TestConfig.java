@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.springbootjpa.venda.entities.Pedido;
 import com.springbootjpa.venda.entities.Usuario;
+import com.springbootjpa.venda.entities.enums.StatusPedido;
 import com.springbootjpa.venda.repositories.PedidoRepository;
 import com.springbootjpa.venda.repositories.UsuarioRepository;
 
@@ -29,9 +30,9 @@ public class TestConfig implements CommandLineRunner{ //executar os objetos que 
 		Usuario u1 = new Usuario(null, "Alice Cavalcante", "lili@gmail.com", "648978884", "123456"); 
 		Usuario u2 = new Usuario(null, "Marcelo Jorge", "marcelojpc@gmail.com", "55679878755", "123456"); 
 		
-		Pedido o1 = new Pedido(null, Instant.parse("2024-06-20T19:53:07Z"), u1); 
-		Pedido o2 = new Pedido(null, Instant.parse("2024-07-21T03:42:10Z"), u2); 
-		Pedido o3 = new Pedido(null, Instant.parse("2024-07-22T15:21:22Z"), u1);
+		Pedido o1 = new Pedido(null, Instant.parse("2024-06-20T19:53:07Z"), StatusPedido.ENTREGUE, u1); 
+		Pedido o2 = new Pedido(null, Instant.parse("2024-07-21T03:42:10Z"), StatusPedido.CANCELADO, u2); 
+		Pedido o3 = new Pedido(null, Instant.parse("2024-07-22T15:21:22Z"),StatusPedido.ENTREGUE, u1);
 		
 		
 		usuarioRepository.saveAll(Arrays.asList(u1, u2));
