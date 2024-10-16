@@ -12,7 +12,7 @@ import com.springbootjpa.venda.repositories.UsuarioRepository;
 @Service
 public class UsuarioService {
 	
-	@Autowired
+	@Autowired // Para o spring resolver a dependencia e associar uma instancia do UsuarioRepository no TestConfig
 	private UsuarioRepository repository;
 	
 	public List<Usuario> findAll(){

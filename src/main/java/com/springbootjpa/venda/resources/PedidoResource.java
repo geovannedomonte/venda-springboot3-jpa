@@ -9,25 +9,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springbootjpa.venda.entities.Usuario;
-import com.springbootjpa.venda.services.UsuarioService;
+import com.springbootjpa.venda.entities.Pedido;
+import com.springbootjpa.venda.services.PedidoService;
 
 @RestController
-@RequestMapping(value = "/usuarios")
-public class UsuarioResource {
+@RequestMapping(value = "/pedidos")
+public class PedidoResource {
 	
 	@Autowired
-	public UsuarioService service;
+	public PedidoService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Usuario>> findAll(){   // busca todos os usuarios
-		List<Usuario> list = service.findAll();
+	public ResponseEntity<List<Pedido>> findAll(){   // busca todos os pedido
+		List<Pedido> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
-	@GetMapping(value = "/{id}")     // busca usuarios por id
-	public ResponseEntity<Usuario> findById(@PathVariable Long id){
-		Usuario obj = service.findById(id);
+	@GetMapping(value = "/{id}")     // busca pedido por id
+	public ResponseEntity<Pedido> findById(@PathVariable Long id){
+		Pedido obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 }
