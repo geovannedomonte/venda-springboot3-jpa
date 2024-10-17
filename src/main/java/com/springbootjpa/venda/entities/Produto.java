@@ -14,30 +14,40 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
 @Entity
-@Table(name = "tb_categoria")
-public class Categoria implements Serializable {
+@Table(name = "tb_produto")
+public class Produto implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
+	private String descricao;
+	private Double preco;
+	private String imgUrl;
+	
 	
 	@ManyToMany
-	//@JoinColumn(name = "produtos_id")
+	//@JoinColumn(name = "categorias_id")
 	@Transient
-	private Set<Produto> produtos = new HashSet<>();
-	
-	public Categoria() {
+	private Set<Categoria> categorias = new HashSet<>(); // set representa um conjuto - garante não ter um produto com mais de uma ocorrencia na mesma categoria
+	                                                       // o mesmo produto nao pode ter uma mesma categoria mais de uma vez
+	public Produto(){
 	}
 	
-	public Categoria(Long id, String nome) {
+	
+
+	public Produto(Long id, String nome, String descricao, Double preco, String imgUrl) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.descricao = descricao;
+		this.preco = preco;
+		this.imgUrl = imgUrl;
 	}
 
-	
+
+
 	public Long getId() {
 		return id;
 	}
@@ -55,9 +65,35 @@ public class Categoria implements Serializable {
 	}
 	
 	
+	public String getDescricao() {
+		return descricao;
+	}
 
-	public Set<Produto> getProdutos() {
-		return produtos;
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+	
+	
+
+	public Set<Categoria> getCategorias() {
+		return categorias;
 	}
 
 
@@ -74,9 +110,7 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Produto other = (Produto) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-
 }
