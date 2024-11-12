@@ -2,17 +2,21 @@ package com.springbootjpa.venda.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.springbootjpa.venda.entities.enums.StatusPedido;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,6 +34,9 @@ public class Pedido implements Serializable{
 	@ManyToOne //Relacionamento
 	@JoinColumn(name = "cliente_id") // chave estrangeira 
 	private Usuario cliente; // Associação / cliente: nome do papel que esta no diagrama
+	
+	@OneToMany(mappedBy = "id.pedido", fetch = FetchType.EAGER)
+	private Set<ItemDoPedido> itens = new HashSet<>();
 	
 	public Pedido() {
 	}
@@ -74,6 +81,10 @@ public class Pedido implements Serializable{
 
 	public void setCliente(Usuario cliente) {
 		this.cliente = cliente;
+	}
+	
+	public Set<ItemDoPedido> getItens(){
+		return itens;
 	}
 
 	@Override

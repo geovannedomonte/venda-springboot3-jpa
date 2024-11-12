@@ -9,11 +9,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.springbootjpa.venda.entities.Categoria;
+import com.springbootjpa.venda.entities.ItemDoPedido;
 import com.springbootjpa.venda.entities.Pedido;
 import com.springbootjpa.venda.entities.Produto;
 import com.springbootjpa.venda.entities.Usuario;
 import com.springbootjpa.venda.entities.enums.StatusPedido;
 import com.springbootjpa.venda.repositories.CategoriaRepository;
+import com.springbootjpa.venda.repositories.ItemDoPedidoRepository;
 import com.springbootjpa.venda.repositories.PedidoRepository;
 import com.springbootjpa.venda.repositories.ProdutoRepository;
 import com.springbootjpa.venda.repositories.UsuarioRepository;
@@ -33,6 +35,9 @@ public class TestConfig implements CommandLineRunner{ //executar os objetos que 
 	
 	@Autowired
 	private ProdutoRepository produtoRepository;
+	
+	@Autowired
+	private ItemDoPedidoRepository itemDoPedidoRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -73,8 +78,13 @@ public class TestConfig implements CommandLineRunner{ //executar os objetos que 
 		
 		usuarioRepository.saveAll(Arrays.asList(u1, u2));
 		pedidoRepository.saveAll(Arrays.asList(o1, o2, o3));
-
 		
+		ItemDoPedido oi1 = new ItemDoPedido(o1, p1, 2, p1.getPreco()); 
+		ItemDoPedido oi2 = new ItemDoPedido(o1, p3, 1, p3.getPreco()); 
+		ItemDoPedido oi3 = new ItemDoPedido(o2, p3, 2, p3.getPreco()); 
+		ItemDoPedido oi4 = new ItemDoPedido(o3, p5, 2, p5.getPreco()); 
+
+		itemDoPedidoRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 
 		
 		

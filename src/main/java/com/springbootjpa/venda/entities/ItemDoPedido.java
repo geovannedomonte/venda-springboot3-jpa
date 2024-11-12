@@ -3,6 +3,7 @@ package com.springbootjpa.venda.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springbootjpa.venda.entities.pk.ItemDoPedidoPK;
 
 import jakarta.persistence.EmbeddedId;
@@ -15,7 +16,7 @@ public class ItemDoPedido implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@EmbeddedId
-	private ItemDoPedidoPK id;
+	private ItemDoPedidoPK id = new ItemDoPedidoPK();
 	private Integer quantidade;
 	private Double preco;
 	
@@ -30,6 +31,7 @@ public class ItemDoPedido implements Serializable{
 		this.preco = preco;
 	}
 	
+	@JsonIgnore
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
