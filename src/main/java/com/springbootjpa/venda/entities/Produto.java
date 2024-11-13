@@ -5,8 +5,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,11 +28,14 @@ public class Produto implements Serializable {
 	private Double preco;
 	private String imgUrl;
 	
-	@JsonIgnore
+	
 	@ManyToMany
 	@JoinTable(name = "td_produto_categoria", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
 	private Set<Categoria> categorias = new HashSet<>(); // set representa um conjuto - garante não ter um produto com mais de uma ocorrencia na mesma categoria
 	                                                       // o mesmo produto nao pode ter uma mesma categoria mais de uma vez
+	@OneToMany(mappedBy = "id.produto")
+	private Set<ItemDoPedido> itens = new  HashSet<>();
+	
 	public Produto(){
 	}
 	
@@ -97,7 +99,17 @@ public class Produto implements Serializable {
 	public Set<Categoria> getCategorias() {
 		return categorias;
 	}
+	
+	
+	public Set<Pedido> getPedidos() {
+		Set<Pedido> set = new HashSet<>();
+		for (ItemDoPedido x : itens) {
+			set.add(x.getPedido());
+		}
+		return set;
+	}
 
+	
 
 	@Override
 	public int hashCode() {
