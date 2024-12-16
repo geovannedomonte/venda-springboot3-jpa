@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.springbootjpa.venda.entities.Categoria;
 import com.springbootjpa.venda.entities.ItemDoPedido;
+import com.springbootjpa.venda.entities.Pagamento;
 import com.springbootjpa.venda.entities.Pedido;
 import com.springbootjpa.venda.entities.Produto;
 import com.springbootjpa.venda.entities.Usuario;
@@ -71,13 +72,15 @@ public class TestConfig implements CommandLineRunner{ //executar os objetos que 
 		
 		Usuario u1 = new Usuario(null, "Alice Cavalcante", "lili@gmail.com", "648978884", "123456"); 
 		Usuario u2 = new Usuario(null, "Marcelo Jorge", "marcelojpc@gmail.com", "55679878755", "123456");
+		Usuario u3 = new Usuario(null, "Geovanne do Monte", "geo@gmail.com", "21998789568", "123456");
 		
 		Pedido o1 = new Pedido(null, Instant.parse("2024-06-20T19:53:07Z"), StatusPedido.ENTREGUE, u1); 
 		Pedido o2 = new Pedido(null, Instant.parse("2024-07-21T03:42:10Z"), StatusPedido.CANCELADO, u2); 
 		Pedido o3 = new Pedido(null, Instant.parse("2024-07-22T15:21:22Z"),StatusPedido.ENTREGUE, u1);
+		Pedido o4 = new Pedido(null, Instant.parse("2024-10-22T12:25:15Z"),StatusPedido.PAGO, u3);
 		
-		usuarioRepository.saveAll(Arrays.asList(u1, u2));
-		pedidoRepository.saveAll(Arrays.asList(o1, o2, o3));
+		usuarioRepository.saveAll(Arrays.asList(u1, u2, u3));
+		pedidoRepository.saveAll(Arrays.asList(o1, o2, o3, o4));
 		
 		ItemDoPedido oi1 = new ItemDoPedido(o1, p1, 2, p1.getPreco()); 
 		ItemDoPedido oi2 = new ItemDoPedido(o1, p3, 1, p3.getPreco()); 
@@ -86,6 +89,10 @@ public class TestConfig implements CommandLineRunner{ //executar os objetos que 
 
 		itemDoPedidoRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 
+		Pagamento pag1 = new Pagamento(null, Instant.parse("2024-10-22T14:25:15Z"), o4);
+		o4.setPagamento(pag1);
+		
+		pedidoRepository.save(o4);
 		
 		
 	}
