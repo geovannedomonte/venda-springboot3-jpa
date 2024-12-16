@@ -105,6 +105,14 @@ public class Pedido implements Serializable{
 	public int hashCode() {
 		return Objects.hash(id);
 	}
+	
+	public Double getTotal() {
+		Double sum = 0.0;
+		for (ItemDoPedido x : itens) {
+			sum = sum + x.getSubTotal();
+		}
+		return sum;
+	}
 
 	@Override
 	public boolean equals(Object obj) {

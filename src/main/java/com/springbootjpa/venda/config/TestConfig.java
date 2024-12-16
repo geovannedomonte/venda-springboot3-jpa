@@ -86,8 +86,10 @@ public class TestConfig implements CommandLineRunner{ //executar os objetos que 
 		ItemDoPedido oi2 = new ItemDoPedido(o1, p3, 1, p3.getPreco()); 
 		ItemDoPedido oi3 = new ItemDoPedido(o2, p3, 2, p3.getPreco()); 
 		ItemDoPedido oi4 = new ItemDoPedido(o3, p5, 2, p5.getPreco()); 
+		ItemDoPedido oi5 = new ItemDoPedido(o4, p5, 2, p5.getPreco()); 
+		ItemDoPedido oi6 = new ItemDoPedido(o4, p2, 3, p2.getPreco());
 
-		itemDoPedidoRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+		itemDoPedidoRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4, oi5, oi6));
 
 		Pagamento pag1 = new Pagamento(null, Instant.parse("2024-10-22T14:25:15Z"), o4);
 		o4.setPagamento(pag1);
