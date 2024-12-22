@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.springbootjpa.venda.entities.Usuario;
 import com.springbootjpa.venda.repositories.UsuarioRepository;
+import com.springbootjpa.venda.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UsuarioService {
@@ -21,7 +22,7 @@ public class UsuarioService {
 	
 	public Usuario findById(Long id) {
 		Optional<Usuario> obj =  repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));  //return obj.get();
 	}
 	
 	public Usuario insert(Usuario obj) {
