@@ -5,13 +5,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.springbootjpa.venda.entities.Usuario;
 import com.springbootjpa.venda.repositories.UsuarioRepository;
 import com.springbootjpa.venda.services.exceptions.DatabaseException;
 import com.springbootjpa.venda.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UsuarioService {
@@ -59,12 +60,25 @@ public class UsuarioService {
 	        throw new DatabaseException(e.getMessage());		
 	    }	
 	} 
-	
+	/*
 	public Usuario update(Long id, Usuario obj) {
 		Usuario entity = findById(id);
 		updateData(entity, obj);
 		return repository.save(entity);
 	}
+	*/
+	
+	public Usuario update(Long id, Usuario obj) {
+		try {
+			Usuario entity =  findById(id); // User entity = repository.getOne(id); // User entity = repository.getReferenceById(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}	
+	}
+
+	
 
 	private void updateData(Usuario entity, Usuario obj) {
 		entity.setName(obj.getName());
