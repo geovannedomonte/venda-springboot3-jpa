@@ -1,6 +1,6 @@
 package com.springbootjpa.venda.services.exceptions;
 
-public class ResourceNotFoundException extends RuntimeException{ // error 400
+public class ResourceNotFoundException extends RuntimeException{ 
 
 	private static final long serialVersionUID = 1L;
 	

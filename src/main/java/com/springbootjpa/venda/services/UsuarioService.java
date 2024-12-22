@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.springbootjpa.venda.entities.Usuario;
 import com.springbootjpa.venda.repositories.UsuarioRepository;
+import com.springbootjpa.venda.services.exceptions.DatabaseException;
 import com.springbootjpa.venda.services.exceptions.ResourceNotFoundException;
 
 @Service
@@ -29,9 +32,33 @@ public class UsuarioService {
 		return repository.save(obj);
 	}
 	
+	/*
 	public void delete(Long id) {
 		repository.deleteById(id);
+	} 
+	*/
+	/*
+	public void delete(Long id) {
+		try {
+			repository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		}
 	}
+	*/
+	public void delete(Long id) {
+	    try {
+	        if (repository.existsById(id)) {
+	            repository.deleteById(id);			
+	        } else {				
+	            throw new ResourceNotFoundException(id);			
+	        }		
+	    } catch (DataIntegrityViolationException e) {			
+	        throw new DatabaseException(e.getMessage());		
+	    }	
+	} 
 	
 	public Usuario update(Long id, Usuario obj) {
 		Usuario entity = findById(id);
